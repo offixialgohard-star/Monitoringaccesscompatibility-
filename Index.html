@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility & Pricing Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Top Navigation Tabs */
+        .tabs {
+            display: flex;
+            background-color: #5d676e;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-right: 1px solid #6c777e;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab.active {
+            background-color: #4caf50;
+            position: relative;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px 6px 0 6px;
+            border-style: solid;
+            border-color: #4caf50 transparent transparent transparent;
+        }
+
+        /* Banner Header */
+        .header-banner {
+            background-color: #263238;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px 20px;
+        }
+
+        .header-banner h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .header-banner p {
+            font-size: 12px;
+            color: #b0bec5;
+            margin-bottom: 15px;
+        }
+
+        .btn-orange {
+            background-color: #ff9800;
+            color: #ffffff;
+            border: none;
+            padding: 10px 30px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .btn-orange:hover {
+            background-color: #e68a00;
+        }
+
+        /* Compatibility Selection Form */
+        .selector-section {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .selector-section h3 {
+            font-size: 18px;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 13px;
+            background-color: #fff;
+        }
+
+        .btn-blue {
+            width: 100%;
+            background-color: #64b5f6;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Pricing Card Base */
+        .pricing-card {
+            margin: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .card-header {
+            padding: 12px 15px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-badge {
+            background: #ffffff;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+
+        .options-list {
+            text-align: left;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .option-item label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .card-footer-expand {
+            background-color: #d6d6d6;
+            color: #555;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Card Specific Colors */
+        .card-lite .card-header { background-color: #16a085; }
+        .card-lite .price-badge { color: #16a085; }
+
+        .card-premium .card-header { background-color: #2980b9; }
+        .card-premium .price-badge { color: #2980b9; }
+
+        .card-extreme .card-header { background-color: #8e44ad; }
+        .card-extreme .price-badge { color: #8e44ad; }
+
+        /* Before You Buy Section */
+        .before-buy {
+            margin: 25px 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .bb-header {
+            background-color: #8bc34a;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .bb-step {
+            background-color: #78909c;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid #90a4ae;
+        }
+
+        .bb-step h4 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .bb-step p {
+            font-size: 11px;
+            color: #eceff1;
+        }
+
+        .bb-or {
+            background-color: #29b6f6;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+        }
+
+        .or-badge {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            color: #29b6f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: -25px auto 10px auto;
+            border: 2px solid #29b6f6;
+        }
+
+        .bb-or p {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* Payment Icons Footer */
+        .payment-methods {
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 11px;
+            color: #777;
+            background: #fff;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pay-card {
+            background: #eee;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Device Tabs -->
+    <div class="tabs">
+        <div class="tab">Android</div>
+        <div class="tab active">iPhone</div>
+        <div class="tab">iPad</div>
+        <div class="tab">Computers</div>
+    </div>
+
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <h2>Check If My iPhone Is Compatible</h2>
+        <p>(FlexiSPY supports most iPhones)</p>
+        <button class="btn-orange">Buy Now</button>
+    </div>
+
+    <!-- Selector Section -->
+    <div class="selector-section">
+        <h3>Select Your iPhone</h3>
+        
+        <div class="form-group">
+            <label>I have a</label>
+            <select class="form-control">
+                <option>iPhone 16 Pro</option>
+                <option>iPhone 15 Pro</option>
+                <option>iPhone 14</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>running</label>
+            <select class="form-control">
+                <option>iOS 16</option>
+                <option>iOS 17</option>
+                <option>iOS 18</option>
+            </select>
+        </div>
+
+        <button class="btn-blue">SHOW ME</button>
+    </div>
+
+    <!-- LITE Card -->
+    <div class="pricing-card card-lite">
+        <div class="card-header">
+            <span>LITE</span>
+            <span class="price-badge">$49.95</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                LITE offers an essential set of monitoring features at an unbeatable price. Perfect for those who are on a budget.
+            </p>
+            <div class="options-list">
+                <div class="option-item">
+                    <label><input type="radio" name="lite" checked> 1 month</label>
+                    <span>$49.95</span>
+                </div>
+            </div>
+            <button class="btn-orange">BUY NOW</button>
+        </div>
+        <div class="card-footer-expand">Expand Features &#9660;</div>
+    </div>
+
+    <!-- PREMIUM Card -->
+    <div class="pricing-card card-premium">
+        <div class="card-header">
+            <span>PREMIUM</span>
+            <span class="price-badge">$79</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                Choose PREMIUM for <strong>all around monitoring</strong> of mobile activities. Gives you more features than any of our competitors.
+            </p>
+            <div class="options-list">
+                <div class="option-item">
+                    <label><input type="radio" name="premium" checked> 1 month</label>
+                    <span>$79</span>
+                </div>
+                <div class="option-item">
+                    <label><input type="radio" name="premium"> 3 months</label>
+                    <span>$119</span>
+                </div>
+                <div class="option-item">
+                    <label><input type="radio" name="premium"> 12 months</label>
+                    <span>$179</span>
+                </div>
+            </div>
+            <button class="btn-orange">BUY NOW</button>
+        </div>
+        <div class="card-footer-expand">Expand Features &#9660;</div>
+    </div>
+
+    <!-- EXTREME Card -->
+    <div class="pricing-card card-extreme">
+        <div class="card-header">
+            <span>EXTREME</span>
+            <span class="price-badge">$119</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                Only for <strong>the most demanding detectives</strong>, EXTREME adds monitoring and recording of all audio streams and other amazing discovery tools.
+            </p>
+            <div class="options-list">
+                <div class="option-item">
+                    <label><input type="radio" name="extreme" checked> 1 month</label>
+                    <span>$119</span>
+                </div>
+                <div class="option-item">
+                    <label><input type="radio" name="extreme"> 3 months</label>
+                    <span>$239</span>
+                </div>
+                <div class="option-item">
+                    <label><input type="radio" name="extreme"> 12 months</label>
+                    <span>$419</span>
+                </div>
+            </div>
+            <button class="btn-orange">BUY NOW</button>
+        </div>
+        <div class="card-footer-expand">Expand Features &#9660;</div>
+    </div>
+
+    <!-- Before You Buy Section -->
+    <div class="before-buy">
+        <div class="bb-header">Before You Buy</div>
+        
+        <div class="bb-step">
+            <h4>1.</h4>
+            <p>You will need physical access to the device.</p>
+        </div>
+
+        <div class="bb-step">
+            <h4>2.</h4>
+            <p>Click here to see if your device is compatible.</p>
+        </div>
+
+        <div class="bb-step">
+            <h4>3.</h4>
+            <p>View our refund policy.</p>
+        </div>
+
+        <div class="bb-or">
+            <div class="or-badge">OR</div>
+            <div style="font-size: 20px;">&#9881;</div>
+            <p>Use our worry-free installation service.</p>
+        </div>
+    </div>
+
+    <!-- Payment Gateways Footer -->
+    <div class="payment-methods">
+        <div class="payment-icons">
+            <span class="pay-card">VISA</span>
+            <span class="pay-card">MasterCard</span>
+            <span class="pay-card">PayPal</span>
+            <span class="pay-card">AMEX</span>
+            <span class="pay-card">Discover</span>
+            <span class="pay-card">&#8383; BTC</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
